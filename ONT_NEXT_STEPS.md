@@ -69,3 +69,9 @@ Beklenen:
 python network_diagnostics.py
 python ont_live_status.py
 ```
+
+Tum adimlari yeniden toplu kosmak icin:
+
+```bash
+./redo_everything.sh
+```
