@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>com.berat.btcbot</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/Users/beratdal/btcbot_runtime/deploy/daily_retrain.sh</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/beratdal/btcbot_runtime</string>
+    <key>StartCalendarInterval</key>
+    <dict>
+      <key>Hour</key>
+      <integer>3</integer>
+      <key>Minute</key>
+      <integer>0</integer>
+    </dict>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/Users/beratdal/btcbot_runtime/logs/retrain.out</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/beratdal/btcbot_runtime/logs/retrain.err</string>
+  </dict>
+</plist>

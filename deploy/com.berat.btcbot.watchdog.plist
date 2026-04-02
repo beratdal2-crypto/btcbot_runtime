@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>com.berat.btcbot.watchdog</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>/Users/beratdal/btcbot_runtime/deploy/run_watchdog.sh</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/beratdal/btcbot_runtime</string>
+    <key>StartInterval</key>
+    <integer>300</integer>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/Users/beratdal/btcbot_runtime/logs/watchdog.out</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/beratdal/btcbot_runtime/logs/watchdog.err</string>
+  </dict>
+</plist>
