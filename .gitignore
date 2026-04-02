@@ -1,19 +1,12 @@
-# Python cache
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-
-# Virtual environments
 venv/
 venv312/
 .venv/
-
-# Logs
 logs/
 *.log
-
-# Models and heavy files
 models/
 checkpoints/
 data/
@@ -27,8 +20,6 @@ artifacts/
 *.zip
 *.tar
 *.gz
-
-# macOS / editors
 .DS_Store
 .vscode/
 .idea/
