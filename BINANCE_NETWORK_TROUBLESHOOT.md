@@ -109,6 +109,12 @@ Kural degisikligini **botun calistigi sunucunun cikis noktasinda** yapman gereki
 
 Not: Gelistirme makinesinde acman yetmez; bot hangi hostta kosuyorsa o hostun egress yolunda acilmasi gerekir.
 
+Bu adimlari tek komutta tekrar uygulamak icin:
+
+```bash
+./redo_network_access.sh
+```
+
 ## 4) Runtime tarafinda yeniden dogrula
 
 ```bash
