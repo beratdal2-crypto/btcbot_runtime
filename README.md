@@ -106,6 +106,7 @@ BINANCE_API_KEY=...
 BINANCE_API_SECRET=...
 BINANCE_TESTNET=false
 BINANCE_BASE_ENDPOINT=1
+BINANCE_DISABLE_ENV_PROXY=true
 PAPER_TRADE=false
 LIVE_TRADING=true
 LIVE_TEST_ORDERS=true
@@ -128,6 +129,7 @@ Guvenlik notlari:
 
 - Canli spot modunda `LONG_ONLY=true` zorunludur.
 - Varsayilan olarak API key icin IP restriction beklenir. Zorlamayi kapatmak icin `ALLOW_UNRESTRICTED_API_KEY=true` gerekir.
+- Varsayilan olarak `BINANCE_DISABLE_ENV_PROXY=true` ile bot Binance cagrilarinda environment proxy degiskenlerini devre disi birakir.
 - Emir boyutu `risk_per_trade`, `MAX_LIVE_QUOTE_PER_ORDER` ve sembol filtrelerine gore hesaplanir.
 - Bu surum spot market order gonderir; restart sonrasi eldeki mevcut coin bakiyesini otomatik devralmaz.
 
@@ -140,6 +142,40 @@ SYMBOLS=BTCUSDT,ETHUSDT,BNBUSDT,SOLUSDT
 
 Bu modda bot tek seferde yine tek pozisyon acik tutar; her dongude listedeki coinleri tarar ve en guclu giris sinyalini secmeye calisir.
 Egitim, optimizer, backtest ve walk-forward akislari da ayni `SYMBOLS` listesi uzerinden toplu calisabilir.
+
+### ONTUSDT'yi canliya alma (guvenli sira)
+
+Evet, ONT'yi canliya alabiliriz. Bunun icin once ONT'yi aktif izleme listesine koyup gate kontrollerini gecirdigini dogrulamak gerekir.
+
+Ornek `.env`:
+
+```bash
+SYMBOL=ONTUSDT
+PRIMARY_SYMBOL=ONTUSDT
+SYMBOLS=ONTUSDT
+ALT_RESEARCH_SYMBOLS=XRPUSDT,ONTUSDT
+LIVE_TRADING=true
+LIVE_TEST_ORDERS=true   # once test order ile basla
+```
+
+Ardindan asagidaki sira ile kontrol et:
+
+```bash
+python live_readiness.py
+python verify_ont_live.py
+python verify_live.py
+```
+
+`verify_ont_live.py` ciktisinda `real_live_ready=true` ve genel kontrollerde kritik red nedeni yoksa,
+gercek emir asamasina gecmeden hemen once:
+
+```bash
+LIVE_TEST_ORDERS=false
+PAPER_TRADE=false
+BINANCE_TESTNET=false
+```
+
+Not: Gercek emir moduna gecmeden once kill-switch ve max risk limitlerini (ozellikle `MAX_LIVE_QUOTE_PER_ORDER`) dusuk tutmak daha guvenlidir.
 
 ## 5.2) BinanceTR'ye otomatik USDT aktarim
 

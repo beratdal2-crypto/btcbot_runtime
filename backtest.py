@@ -27,6 +27,7 @@ from rl_infer import get_rl_action_from_df
 from research_profiles import apply_research_profile
 from strategy_selector import select_symbol_strategy
 from strategy_models import enforce_strategy_signal_quality, is_breakout_strategy, model_probability, select_strategy_model
+from model_bootstrap import ensure_base_models
 
 
 def _safe_imbalance(symbol: str) -> float:
@@ -456,6 +457,7 @@ def run_backtest(
     refresh_scores: bool = True,
 ) -> tuple[pd.DataFrame, dict]:
     with apply_research_profile(profile_name):
+        ensure_base_models()
         model = joblib.load(SETTINGS.model_path)
         strategy_models: dict[str, object] = {}
         if os.path.exists(SETTINGS.trend_model_path):

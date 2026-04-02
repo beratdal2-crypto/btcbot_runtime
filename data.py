@@ -17,6 +17,32 @@ KLINE_COLUMNS = [
 _LAST_SUCCESSFUL_ENDPOINT: str | None = None
 
 
+def _disable_proxy_env_for_binance() -> None:
+    if not SETTINGS.binance_disable_env_proxy:
+        return
+    proxy_keys = [
+        "HTTP_PROXY",
+        "HTTPS_PROXY",
+        "ALL_PROXY",
+        "http_proxy",
+        "https_proxy",
+        "all_proxy",
+    ]
+    for key in proxy_keys:
+        os.environ.pop(key, None)
+    os.environ["NO_PROXY"] = ",".join(
+        [
+            "localhost",
+            "127.0.0.1",
+            "binance.com",
+            ".binance.com",
+            "binance.vision",
+            ".binance.vision",
+        ]
+    )
+    os.environ["no_proxy"] = os.environ["NO_PROXY"]
+
+
 def _load_api_resilience_state() -> dict:
     if not os.path.exists(SETTINGS.api_resilience_state_path):
         return {}
@@ -60,6 +86,7 @@ def get_market_data_cache_path(symbol: str | None = None) -> str:
 
 
 def build_client(base_endpoint: str | None = None) -> Client:
+    _disable_proxy_env_for_binance()
     use_testnet = SETTINGS.testnet and not SETTINGS.paper_trade
     client = Client(
         SETTINGS.api_key,

@@ -26,6 +26,7 @@ from agents.mean_reversion_agent import mean_reversion_signal
 from agents.risk_agent import risk_check
 from agents.fusion import final_decision
 from agents.exit_agent import should_signal_exit
+from model_bootstrap import ensure_base_models
 from auto_transfer import maybe_auto_transfer
 from execution import (
     Position,
@@ -398,8 +399,9 @@ def run() -> None:
                 continue
             raise
 
-    if not os.path.exists(SETTINGS.model_path):
-        raise FileNotFoundError(f"Önce model üret: {SETTINGS.model_path}")
+    created_models = ensure_base_models()
+    if created_models:
+        print(f"[BOOTSTRAP_MODEL] Varsayilan model dosyalari olusturuldu: {', '.join(created_models)}")
     if not _model_exists(SETTINGS.rl_model_path):
         raise FileNotFoundError(f"Önce RL modeli üret: {SETTINGS.rl_model_path}")
 

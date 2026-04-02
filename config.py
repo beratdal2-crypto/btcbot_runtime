@@ -37,6 +37,7 @@ class Settings:
     testnet: bool = _to_bool(os.getenv("BINANCE_TESTNET", "true"), True)
     base_endpoint: str = os.getenv("BINANCE_BASE_ENDPOINT", "1")
     base_endpoints_csv: str = os.getenv("BINANCE_BASE_ENDPOINTS", "")
+    binance_disable_env_proxy: bool = _to_bool(os.getenv("BINANCE_DISABLE_ENV_PROXY", "true"), True)
     live_trading: bool = _to_bool(os.getenv("LIVE_TRADING", "false"), False)
     live_test_orders: bool = _to_bool(os.getenv("LIVE_TEST_ORDERS", "true"), True)
     allow_unrestricted_api_key: bool = _to_bool(os.getenv("ALLOW_UNRESTRICTED_API_KEY", "false"), False)
