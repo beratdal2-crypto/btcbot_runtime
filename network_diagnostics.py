@@ -5,12 +5,19 @@ import ssl
 import urllib.request
 import os
 
+from config import SETTINGS
 
-TARGETS = [
-    ("api1.binance.com", 443, "https://api1.binance.com/api/v3/ping"),
-    ("api2.binance.com", 443, "https://api2.binance.com/api/v3/ping"),
-    ("api.binance.com", 443, "https://api.binance.com/api/v3/ping"),
-]
+
+def _targets() -> list[tuple[str, int, str]]:
+    tld = SETTINGS.binance_tld
+    if tld == "com":
+        return [
+            ("api1.binance.com", 443, "https://api1.binance.com/api/v3/ping"),
+            ("api2.binance.com", 443, "https://api2.binance.com/api/v3/ping"),
+            ("api.binance.com", 443, "https://api.binance.com/api/v3/ping"),
+        ]
+    host = f"api.binance.{tld}"
+    return [(host, 443, f"https://{host}/api/v3/ping")]
 PROXY_KEYS = [
     "HTTP_PROXY",
     "HTTPS_PROXY",
@@ -79,7 +86,7 @@ def main() -> int:
 
     any_https_ok = False
     any_https_no_proxy_ok = False
-    for host, port, url in TARGETS:
+    for host, port, url in _targets():
         dns_ok, dns_info = _check_dns(host)
         tcp_ok, tcp_info = _check_tcp(host, port)
         https_ok, https_info = _check_https(url)

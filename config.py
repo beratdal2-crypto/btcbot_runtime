@@ -37,6 +37,7 @@ class Settings:
     testnet: bool = _to_bool(os.getenv("BINANCE_TESTNET", "true"), True)
     base_endpoint: str = os.getenv("BINANCE_BASE_ENDPOINT", "1")
     base_endpoints_csv: str = os.getenv("BINANCE_BASE_ENDPOINTS", "")
+    binance_tld: str = (os.getenv("BINANCE_TLD", "com") or "com").strip().lower()
     binance_disable_env_proxy: bool = _to_bool(os.getenv("BINANCE_DISABLE_ENV_PROXY", "true"), True)
     live_trading: bool = _to_bool(os.getenv("LIVE_TRADING", "false"), False)
     live_test_orders: bool = _to_bool(os.getenv("LIVE_TEST_ORDERS", "true"), True)
@@ -321,6 +322,9 @@ class Settings:
         return tuple(deduped)
 
     def base_endpoints(self) -> tuple[str, ...]:
+        if self.binance_tld != "com":
+            # Non-com tld endpoints generally use api.binance.<tld> without numeric suffix.
+            return ("",)
         return _parse_csv_values(self.base_endpoints_csv, self.base_endpoint)
 
 SETTINGS = Settings()

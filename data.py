@@ -88,11 +88,16 @@ def get_market_data_cache_path(symbol: str | None = None) -> str:
 def build_client(base_endpoint: str | None = None) -> Client:
     _disable_proxy_env_for_binance()
     use_testnet = SETTINGS.testnet and not SETTINGS.paper_trade
+    resolved_base_endpoint = base_endpoint or SETTINGS.base_endpoint
+    if SETTINGS.binance_tld != "com":
+        # api.binance.<tld> hosts do not support api1/api2 style subdomains for REST routes.
+        resolved_base_endpoint = ""
     client = Client(
         SETTINGS.api_key,
         SETTINGS.api_secret,
         testnet=use_testnet,
-        base_endpoint=base_endpoint or SETTINGS.base_endpoint,
+        tld=SETTINGS.binance_tld,
+        base_endpoint=resolved_base_endpoint,
         ping=False,
     )
     if use_testnet:

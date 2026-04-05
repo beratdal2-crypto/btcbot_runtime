@@ -1,0 +1,36 @@
+services:
+  - type: worker
+    name: btcbot-worker
+    env: docker
+    plan: starter
+    autoDeploy: true
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: BINANCE_TLD
+        value: me
+      - key: BINANCE_TESTNET
+        value: "false"
+      - key: BINANCE_DISABLE_ENV_PROXY
+        value: "true"
+      - key: SYMBOL
+        value: ONTUSDT
+      - key: PRIMARY_SYMBOL
+        value: ONTUSDT
+      - key: SYMBOLS
+        value: ONTUSDT
+      - key: ALT_RESEARCH_SYMBOLS
+        value: XRPUSDT,ONTUSDT
+      - key: LIVE_TRADING
+        value: "true"
+      - key: LIVE_TEST_ORDERS
+        value: "true"
+      - key: PAPER_TRADE
+        value: "false"
+      - key: LONG_ONLY
+        value: "true"
+      - key: MAX_LIVE_QUOTE_PER_ORDER
+        value: "25"
+      - key: BINANCE_API_KEY
+        sync: false
+      - key: BINANCE_API_SECRET
+        sync: false

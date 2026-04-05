@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import os
 os.environ.setdefault("MPLCONFIGDIR", os.path.join("logs", ".mplconfig"))
 os.makedirs(os.environ["MPLCONFIGDIR"], exist_ok=True)

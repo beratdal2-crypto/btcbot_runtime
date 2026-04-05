@@ -38,6 +38,7 @@ def main() -> None:
     print(f"live_trading={SETTINGS.live_trading}")
     print(f"live_test_orders={SETTINGS.live_test_orders}")
     print(f"binance_testnet={SETTINGS.testnet}")
+    print(f"binance_tld={SETTINGS.binance_tld}")
 
     if SETTINGS.api_key in {"", "PUT_YOUR_KEY_HERE"} or SETTINGS.api_secret in {"", "PUT_YOUR_SECRET_HERE"}:
         raise ValueError(".env icine gecerli BINANCE_API_KEY ve BINANCE_API_SECRET yazilmali.")
