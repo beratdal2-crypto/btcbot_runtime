@@ -1,0 +1,22 @@
+name: Deploy Render Worker
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Skip when hook is missing
+        if: ${{ secrets.RENDER_DEPLOY_HOOK == '' }}
+        run: echo "RENDER_DEPLOY_HOOK secret yok; deploy hook adimi atlandi."
+
+      - name: Trigger Render deploy hook
+        if: ${{ secrets.RENDER_DEPLOY_HOOK != '' }}
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          curl -fsS -X POST "$RENDER_DEPLOY_HOOK"
+          echo "Render deploy hook tetiklendi."
